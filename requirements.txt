@@ -1,0 +1,6 @@
+robotframework==4.0.1
+robotframework-seleniumlibrary==5.0.0
+selenium==4.0.0
+robotframework-screenshot
+Pillow
+opencv-python
