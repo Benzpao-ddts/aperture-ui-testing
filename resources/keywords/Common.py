@@ -2,7 +2,6 @@ from PIL import Image, ImageChops
 import cv2
 import numpy as np
 
-@keyword
 def compare_images(img1_path, img2_path, output_path):
     # Open the images
     img1 = Image.open(img1_path)

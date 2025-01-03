@@ -3,6 +3,10 @@ ${BROWSER}                         chrome
 ${URL}                             https://www.saucedemo.com/
 ${PASSWORD}                        secret_sauce
 ${USERNAME_SUCCESS}                standard_user
+${USERNAME_PERFORMANCE}            performance_glitch_user
+${USERNAME_VISUAL}                 visual_user
+${USERNAME_ERROR}                  error_user
+
 ${USERNAME_DOES_NOT_MATCH}         test
 ${USERNAME_LOCKED_OUT_USER}        locked_out_user
 ${PASSWORD}                        secret_sauce

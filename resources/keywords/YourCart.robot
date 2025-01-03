@@ -32,7 +32,7 @@ Retrieve Product Data And Store In Dictionary
     ...                 - `product_status`: List of product button statuses as follows 1. Add to cart 2.Remove.
     ...                 - Can configure {ignore_product_status} if you don't want to retrieve product_status on overview page because it does not has this variable
     # Get all inventory items
-    ${items_count}=     Common.Get Length Of Items      ${ITEMS_CART_LOCATOR}
+    ${items_count}=     Get Number of Products in Cart
     Log To Console      Get Length Of Items:${items_count}
     ${item_name}    ${item_desc}    ${item_price}    ${item_status}=    Create Items List
 
@@ -54,6 +54,7 @@ Append Status To List
     ${status}=               Retrieve Status Item Text     ${index}     ${ITEM_STATUS_BUTTON}
     Append To List           ${item_status}               ${status}
 
+# Don't still be used
 Random Indices to Remove Products For Cart Page
     [Arguments]     ${product_selected}     ${number_product_removed}
     ${product_names}=    Get From Dictionary    ${product_selected}    product_name
@@ -63,3 +64,16 @@ Random Indices to Remove Products For Cart Page
     @{random_indices_to_remove}=    Products.Random Indices To Select Products       ${product_selected}     ${number_product_removed}
     Log To Console    Random: ${random_indices_to_remove}
     RETURN      @{random_indices_to_remove}
+
+Get Number of Products in Cart
+    ${items_count}=     Common.Get Length Of Items      ${ITEMS_CART_LOCATOR}
+    RETURN      ${items_count}
+
+Remove Products From Your Cart
+    [Arguments]     ${random_products_to_remove}
+    [Documentation]    Iterates over the length of items in the cart. In each iteration:
+        ...                - Clicks the first "Remove" button to remove the top-most item.
+        ...                - Waits for the cart to update dynamically after each removal.
+    FOR    ${item}    IN RANGE    0       ${random_products_to_remove}
+        Click Element               ${ITEM_STATUS_BUTTON.replace('{index}', str(1))}
+    END

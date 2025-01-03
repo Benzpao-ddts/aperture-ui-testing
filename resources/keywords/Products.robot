@@ -62,7 +62,7 @@ Add Products To Your Cart
         Click Element               ${ITEM_STATUS_BUTTON.replace('{index}', str(${item}))}
     END
 
-Remove Products To Your Cart
+Remove Products From Your Cart
     [Arguments]     @{random_products_to_remove}
     FOR    ${item}    IN    @{random_products_to_remove}
         Click Element               ${ITEM_STATUS_BUTTON.replace('{index}', str(${item}))}

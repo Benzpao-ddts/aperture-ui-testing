@@ -35,9 +35,7 @@ Create Items List
 
 Get Length Of Items
     [Arguments]     ${locator}
-    # Get all inventory items
     ${items}=    Get WebElements    ${locator}
-    # Get the length of the list of items
     ${items_count}=    Get Length    ${items}
     RETURN      ${items_count}
 

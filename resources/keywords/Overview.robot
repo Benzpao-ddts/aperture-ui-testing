@@ -1,11 +1,12 @@
 *** Settings ***
 Library         SeleniumLibrary
 Resource        ../locators/Overview.robot
+Resource        ../locators/ThankYou.robot
 
 *** Keywords ***
 Click "Finish" Button
     Click Button        ${FINISH_BUTTON}
-    Page Should Contain     ${OVERVIEW_HEADER_TEXT}
+    Page Should Contain     ${THANK_YOU_TEXT}
 
 Click "Cancel" Button
     Click Button            ${CANCEL_BUTTON}

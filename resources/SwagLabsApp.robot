@@ -4,8 +4,21 @@ Resource        ../resources/keywords/Products.robot
 Resource        ../resources/keywords/ShoppingCartBadge.robot
 Resource        ../resources/keywords/YourCart.robot
 Resource        ../resources/keywords/YourInformation.robot
+Resource        ../resources/keywords/Overview.robot
+Resource        ../resources/variables/TopNav.robot
+Library         ../resources/keywords/Common.py
 
 *** Keywords ***
+Verify Your Information Value After Input
+    [Arguments]     ${first_name}       ${last_name}        ${post_code}
+    YourInformation.Fill Information        ${first_name}       ${last_name}        ${post_code}
+    YourInformation.Verify First Name Field Value After Input       ${first_name}
+    YourInformation.Verify Last Name Field Value After Input        ${last_name}
+    YourInformation.Verify Post Code Field Value After Input        ${post_code}
+
+Verify the Correctness of Webpage Layout
+    Compare Images       ${HEADER_LABEL_EXPECTED_PATH}       ${HEADER_LABEL_ACTUAL_PATH}        ${HEADER_LABEL_DIFF_PATH}
+
 Verify Filter Options Text Displayed
     [Arguments]     ${text_expected}
     Filters.Verify Filter Options Displayed     ${text_expected}
@@ -56,10 +69,10 @@ Verify Cart Icon Updates Correctly
 Navigate To Your Cart Page
     YourCart.Click Shopping Cart Badge
 
-Nevigate to Product Page From Your Cart
+Nevigate To Product Page From Your Cart
     YourCart.Click "Continue Shopping" Button
 
-Nevigate to Your Information Page
+Nevigate To Your Information Page
     YourCart.Click "Checkout" Button
 
 
@@ -67,11 +80,14 @@ Navigation To Overview Page
     YourInformation.Fill Information       ${FIRST_NAME}       ${LAST_NAME}        ${POST_CODE}
     YourInformation.Click "Continue" Button
 
+Nevigate To Thank You Page
+    Overview.Click "Finish" Button
+
 Remove Products To Your Cart By Random Indices
     [Arguments]     ${product_list}     ${number_to_selected}
     Log To Console      product_list:${product_list}
     @{random_to_remove_products}=         Products.Random Indices to Remove Products        ${product_list}      ${number_to_selected}
-    Products.Remove Products To Your Cart       @{random_to_remove_products}
+    Products.Remove Products From Your Cart       @{random_to_remove_products}
     RETURN      @{random_to_remove_products}
 
 Should Be Nevigate to Your Information Page
@@ -93,14 +109,13 @@ Prepare Test Environment For Overview Page Details
     Navigate To Overview Page
 
 Verify Product Details Matches Cart Ignoring Sorting
-    [Arguments]     ${selected_product_details_filtered}
-    ${product_details_your_cart}=     YourCart.Retrieve Product Data And Store In Dictionary
+    [Arguments]     ${product_details_your_cart}        ${selected_product_details_filtered}
     Common.Verify Product Selected On Product With Your Cart Page Ignoring Sorting        ${selected_product_details_filtered}        ${product_details_your_cart}
 
-Verify Cart Updates Correctly
-    [Arguments]     ${selected_product_details_filtered}    ${number_expected}
-    ${number_of_products}=      Count Product Name Length       ${selected_product_details_filtered}
-    Should Be Equal     ${number_of_products}       ${number_expected}
+#Verify Cart Updates Correctly
+#    [Arguments]     ${selected_product_details_filtered}    ${number_expected}
+#    ${number_of_products}=      Count Product Name Length       ${selected_product_details_filtered}
+#    Should Be Equal     ${number_of_products}       ${number_expected}
 
 Count Product Name Length
     [Arguments]     ${product_details}
@@ -116,4 +131,22 @@ Verify Subtotal Without Tax
 
 Verify Total Including Tax
     Overview.Verify Total Of Products Incould Tax
+
+Verify Cart Updates Correctly
+    [Arguments]     ${number_of_items_expected}
+    ${number_of_items_actual}=      YourCart.Get Number of Products in Cart
+    ${value_actual}=    Convert To String    ${number_of_items_actual}
+    Should Be Equal     ${number_of_items_expected}       ${value_actual}
+
+Remove Products From Your Cart By Random Indices
+    [Arguments]     ${number_product_removed}
+    ${product_in_your_cart}=         YourCart.Retrieve Product Data And Store In Dictionary
+    ${number_all_product}=           Count Product Name Length       ${product_in_your_cart}
+    YourCart.Remove Products From Your Cart                ${number_product_removed}
+    ${number_product_expected}=       Evaluate             ${number_all_product} - ${number_product_removed}
+    ${number_product_expected}=       Convert To String    ${number_product_expected}
+    Verify Cart Updates Correctly       ${number_product_expected}
+
+Verify Number Of Cart Icon Should Not Be Visible
+    Element Should Not Be Visible       ${NUMBER_SHOPPING_CART_BADGE_LOCATOR}
 
