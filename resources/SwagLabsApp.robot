@@ -75,7 +75,6 @@ Nevigate To Product Page From Your Cart
 Nevigate To Your Information Page
     YourCart.Click "Checkout" Button
 
-
 Navigation To Overview Page
     YourInformation.Fill Information       ${FIRST_NAME}       ${LAST_NAME}        ${POST_CODE}
     YourInformation.Click "Continue" Button
@@ -90,32 +89,9 @@ Remove Products To Your Cart By Random Indices
     Products.Remove Products From Your Cart       @{random_to_remove_products}
     RETURN      @{random_to_remove_products}
 
-Should Be Nevigate to Your Information Page
-    YourCart.Click "Checkout" Button
-
-Should Be Nevigate to Overview Page
-    YourInformation.Fill Information        ${FIRST_NAME}       ${LAST_NAME}        ${POST_CODE}
-    YourInformation.Click "Continue" Button
-
-Should Be Nevigate to Your Cart Page
-    YourInformation.Click "Cancel" Button
-
-
-
-# Use to be [Setup] to verify information detail on the page
-Prepare Test Environment For Overview Page Details
-    LoginApp.Login Successfully
-    Add Products To Your Cart By Random Indices
-    Navigate To Overview Page
-
 Verify Product Details Matches Cart Ignoring Sorting
     [Arguments]     ${product_details_your_cart}        ${selected_product_details_filtered}
     Common.Verify Product Selected On Product With Your Cart Page Ignoring Sorting        ${selected_product_details_filtered}        ${product_details_your_cart}
-
-#Verify Cart Updates Correctly
-#    [Arguments]     ${selected_product_details_filtered}    ${number_expected}
-#    ${number_of_products}=      Count Product Name Length       ${selected_product_details_filtered}
-#    Should Be Equal     ${number_of_products}       ${number_expected}
 
 Count Product Name Length
     [Arguments]     ${product_details}

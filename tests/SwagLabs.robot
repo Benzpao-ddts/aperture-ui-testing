@@ -18,7 +18,6 @@ Verify Error Message on Login with Different Users
     ${BROWSER}      ${USERNAME_LOCKED_OUT_USER}     ${PASSWORD}     ${ERROR_LOCKED_OUT_USER}
     ${BROWSER}      ${USERNAME_DOES_NOT_MATCH}      ${PASSWORD}     ${ERROR_DOES_NOT_MATCH}
 
-
 Verify Login Page Response Time
     [Tags]          performance     login
     [Setup]         NONE
