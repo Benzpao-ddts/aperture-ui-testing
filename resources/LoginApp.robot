@@ -39,22 +39,22 @@ Login And Navigate To Product Page
     Login.Fill Username Field      ${USERNAME_SUCCESS}
     Login.Fill Password Field      ${PASSWORD}
     Login.Click "Login" Button
-    Wait Until Page Contains       ${PRODUCTS_HEADER_TEXT}     timeout=3s
+    Wait Until Page Contains       ${PRODUCTS_HEADER_TEXT}     timeout=${LOAD_TIME_EXPECTED}
 
 Login And Navigate To Product Page By Performance User
     [Arguments]         ${browser}      ${username}     ${password}
     Login.Open Browser To Login Page      ${browser}
     Login.Fill Username Field      ${username}
     Login.Fill Password Field      ${password}
-    ${start_time}=      Get Current Date            result_format=%Y-%m-%d %H:%M:%S
+    ${start_time}=      Get Current Date            result_format=${DATE_FORMAT}
     Login.Click "Login" Button
-    ${end_time}=        Get Current Date            result_format=%Y-%m-%d %H:%M:%S
-    ${start}=           Convert Date                ${start_time}       result_format=%Y-%m-%d %H:%M:%S
-    ${end}=             Convert Date                ${end_time}         result_format=%Y-%m-%d %H:%M:%S
+    ${end_time}=        Get Current Date            result_format=${DATE_FORMAT}
+    ${start}=           Convert Date                ${start_time}       result_format=${DATE_FORMAT}
+    ${end}=             Convert Date                ${end_time}         result_format=${DATE_FORMAT}
     ${load_time}=       Subtract Date From Date     ${end}              ${start}
     ${load_time_in_seconds}=    Convert Time        ${load_time} seconds
     Log To Console    Login page response time: ${load_time_in_seconds} seconds
-    Should Be True    ${load_time} < 3    Login page response time exceeds 3 seconds
+    Should Be True    ${load_time} < ${LOAD_TIME_EXPECTED}    Login page response time exceeds ${LOAD_TIME_EXPECTED} seconds
 
 Login And Navigate To Product Page By User
     [Arguments]         ${username}     ${password}

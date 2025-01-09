@@ -15,3 +15,6 @@ ${ERROR_LOCKED_OUT_USER}           Epic sadface: Sorry, this user has been locke
 ${ERROR_WITHOUT_INFO}              Epic sadface: Username is required
 ${ERROR_WITHOUT_PASSWORD}          Epic sadface: Password is required
 ${ERROR_DOES_NOT_MATCH}            Epic sadface: Username and password do not match any user in this service
+
+${LOAD_TIME_EXPECTED}              3
+${DATE_FORMAT}                     %Y-%m-%d %H:%M:%S
